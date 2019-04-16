@@ -29,8 +29,6 @@ def readDatafile(file):
     
     for row in csv_reader:
         if line_count == 0:
-            Time_axis_name = row[0]
-            Out_axis_name = row[2]
             line_count += 1
         else:
             Time[index] = float(row[0])
@@ -39,15 +37,15 @@ def readDatafile(file):
             index += 1
             line_count += 1
             
-    return Time, Input, Output,Time_axis_name, Out_axis_name
+    return Time, Input, Output
 
-def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
+def graphDataTF(Time, Input, Output):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
-    #plt.plot(Time, Input, 'b.', label='Input')
-    plt.plot(Time, function(Time, *popt), 'g-',label='Transfer Function')
-    plt.ylabel(Out_axis_name)
-    plt.xlabel(Time_axis_name)
+    plt.plot(Time, Input, 'b.', label='Input')
+    plt.plot(Time, function(Time, 20), 'g-',label='Transfer Function')
+    plt.ylabel("Motor Speed")
+    plt.xlabel("Time (Milliseconds)")
     plt.legend()
     plt.ylim(0,900)
     plt.xlim(0,1000)
@@ -55,13 +53,23 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.grid()
     plt.show()
     
+def graphDatalog(Time, Input, Output):
+    plt.figure()
+    plt.semilogy(Time, Output, 'r.', label='Output')
+    #plt.loglog(Time, function(Time, *popt), 'g-',label='Transfer Function')
+    plt.ylabel("Motor Speed")
+    plt.xlabel("Time (Milliseconds)")
+    plt.legend()
+    plt.minorticks_on()
+    plt.grid()
+    plt.show()
     
-def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
+def graphData(Time, Input, Output):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
-    plt.ylabel(Out_axis_name)
-    plt.xlabel(Time_axis_name)
+    plt.ylabel("Motor Speed")
+    plt.xlabel("Time (Milliseconds)")
     plt.legend()
     plt.ylim(0,900)
     plt.xlim(0,1000)
@@ -70,17 +78,18 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.show()
 
 file = 'NewMotorData.csv'
-Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
+Time, Input, Output =  readDatafile(file)
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
 #def Filter(Output)
 
-def function(Time, K, T):
-    return K-K*np.exp(-Time/T)
+def function(Time, T):
+    return 660-660*np.exp(-Time/T)
 
-n = 24
-popt, pcov = curve_fit(function, Time, Output,bounds=(n,1000))
 
-graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
-graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
-print('Transfer Function is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+popt, pcov = curve_fit(function, Time[1:15], Output[1:15])
+
+graphData(Time, Input, Output)
+graphDataTF(Time, Input, RPM_filt)
+graphDatalog(Time, Input, RPM_filt)
+print('Transfer Function is:',660,'(1-e^(-t/'+str(popt[0])+')')
