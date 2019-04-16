@@ -46,5 +46,6 @@ def graphData(Time, Input, Output):
     plt.legend()
     plt.show() 
 
-Time, Input, Output =  readDatafile('Motor Data.csv')
+file = 'NewMotorData.csv'
+Time, Input, Output =  readDatafile(file)
 graphData(Time, Input, Output)
