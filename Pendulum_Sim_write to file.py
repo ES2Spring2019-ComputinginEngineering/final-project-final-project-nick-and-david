@@ -79,24 +79,3 @@ with open('pendulum_data_with_friction.csv', 'w', newline='') as fp:
     for i in range(len(short_time)):
         data = [short_time[i],short_theta[i]]
         a.writerow(data)
-
-'''
-plt.subplot(3,1,2)                  #plots angular velocity vs time
-plt.plot(time, w, 'ro-') 
-plt.xlabel('Time (seconds)')
-plt.ylabel('Angular Velocity (rads/s)')
-plt.title('Angular Velocity vs Time')
-plt.xlim((0, 14))
-plt.grid()
-
-
-plt.subplot(3,1,3)                  #plots angular acceleration vs time
-plt.plot(time, acc, 'ro-') 
-plt.xlabel('Time (seconds)')
-plt.ylabel('Angular Acceleration (rads/s^2)')
-plt.title('Angular vs Time')
-plt.xlim((0, 14))
-plt.grid()
-plt.tight_layout()
-plt.show()
-'''
