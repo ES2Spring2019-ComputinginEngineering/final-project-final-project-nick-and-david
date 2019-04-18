@@ -44,13 +44,13 @@ def readDatafile(file):
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
-    #plt.plot(Time, Input, 'b.', label='Input')
-    plt.plot(Time, function(Time, *popt), 'g-',label='Transfer Function')
+    plt.plot(Time, Input, 'b.', label='Input')
+    plt.plot(Time, function(Time, *popt), 'g-',label='Step Response')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
-    plt.ylim(0,900)
-    plt.xlim(0,1000)
+    plt.ylim(0,2*(np.max(Output)))
+    plt.xlim(0,np.max(Time))
     plt.minorticks_on()
     plt.grid()
     plt.show()
@@ -63,13 +63,13 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
-    plt.ylim(0,900)
-    plt.xlim(0,1000)
+    plt.ylim(0,2*(np.max(Output)))
+    plt.xlim(0,np.max(Time))
     plt.minorticks_on()
     plt.grid()
     plt.show()
 
-file = 'NewMotorData.csv'
+file = 'PhotoresistorData.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
