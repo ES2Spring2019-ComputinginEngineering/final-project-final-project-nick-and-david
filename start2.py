@@ -34,7 +34,7 @@ def readDatafile(file):
             Out_axis_name = row[2]
             line_count += 1
         else:
-            Time[index] = float(row[0])*1000
+            Time[index] = float(row[0])
             Input[index] = float(row[1])
             Output[index] = float(row[2])
             index += 1
@@ -50,8 +50,6 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
-    plt.ylim(0,900)
-    plt.xlim(0,1000)
     plt.minorticks_on()
     plt.grid()
     plt.show()
@@ -64,13 +62,11 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
-    plt.ylim(0,900)
-    plt.xlim(0,1000)
     plt.minorticks_on()
     plt.grid()
     plt.show()
 
-file = 'SecondOrderMotordata.csv'
+file = 'SecOrdMotorData.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
