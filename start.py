@@ -83,4 +83,4 @@ popt, pcov = curve_fit(function, Time, Output,bounds=(n,1000))
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
-print('Transfer Function is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')

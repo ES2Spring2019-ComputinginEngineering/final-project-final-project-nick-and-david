@@ -45,7 +45,7 @@ def readDatafile(file):
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
-    #plt.plot(Time, Input, 'b.', label='Input')
+    plt.plot(Time, Input, 'b.', label='Input')
     plt.plot(Time, function(Time, *popt), 'g-',label='Transfer Function')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
@@ -67,17 +67,18 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.show()
 
 file = 'SecOrdMotorData.csv'
-Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
+Time, Input, Output, Time_axis_name, Out_axis_name =  readDatafile(file)
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
 #def Filter(Output)
 
-def function(Time, K, T):
-    return K-K*np.exp(-Time/T)
+
+def function(Time, K, Omega_d, Zeta):
+    return K*(1-(1/np.sqrt(1-Zeta**2))*(np.exp(-Zeta*Omega_d*Time))*np.cos(Omega_d*Time))
 
 n = 24
-popt, pcov = curve_fit(function, Time, Output,bounds=(n,1000))
+popt, pcov = curve_fit(function, Time, Output, bounds=(0,[1000, 100000, 1]))
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
-#graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
+graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
 #print('Transfer Function is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
