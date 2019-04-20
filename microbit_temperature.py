@@ -10,7 +10,7 @@ while True:
     if microbit.button_a.was_pressed() == True:                         # waits for button_a pressed
         microbit.sleep(3000)                                            # 3 second delay
         time0 = microbit.running_time()
-        with open('light_data' + a + '.txt', 'w') as my_file:           # makes file named 1 to 100
+        with open('temperature_data' + a + '.txt', 'w') as my_file:           # makes file named 1 to 100
             for i in range(3000):
                 microbit.display.set_pixel(2, 2, 9)                     # indicator that it is recording data
                 microbit.sleep(5)                                       # sleep at 25 milliseconds
