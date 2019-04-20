@@ -71,11 +71,12 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
 
 file = 'Arduino_Temp_Data.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-#since some of the data is negative (- degrees Celsius), it had to be normilized
-Output = Output + 13.38
+
+#Since some of the data is negative (- degrees Celsius), it had to be normilized
+Output = Output - np.min(Output)
+Output = Output/(np.max(Output)-np.min(Output))
 Input = Input/np.max(Output)-np.min(Output)
 Time = Time/1000
-Output = Output/(np.max(Output)-np.min(Output))
 #End normilized
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 

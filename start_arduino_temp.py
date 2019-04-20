@@ -71,11 +71,14 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
 
 file = 'Arduino_Temp_Data1.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
+# Normilized Data
 Output = (Output + 13.38)
 Input = Input + 13.38
 Input = Input/np.max(Output)-np.min(Output)
-Time = Time/60000
+Time = Time/1000
+Time = Time - np.min(Time)
 Output = Output/(np.max(Output)-np.min(Output))
+#filtering
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
 #def Filter(Output)
@@ -83,8 +86,8 @@ RPM_filt = sig.medfilt(Output,kernel_size=5)
 def function(Time, K, T):
     return K-K*np.exp(-Time/T)  #for step up k(1-e)
 
-
-popt, pcov = curve_fit(function, Time, Output,bounds=([0,0],[1,10]))
+#Need to have this curve fit better
+popt, pcov = curve_fit(function, Time, Output) #,bounds=([0,0],[1,10])
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
