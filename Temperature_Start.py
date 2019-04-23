@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 
-fin = open('temperature_data82.txt')                  #insert number of data file
+fin = open('newtemperature_data88.txt')                  #insert number of data file
 
 time_list = []
 temp_list = []
@@ -13,7 +13,7 @@ for line in fin:
     a = line.strip()
     c = a.split(',')
     time, temp = c
-    time_list.append(int(time)/1000)
+    time_list.append(float(time))
     temp_list.append(int(temp))
 
 
