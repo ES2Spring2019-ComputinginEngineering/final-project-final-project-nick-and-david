@@ -69,7 +69,7 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.grid()
     plt.show()
 
-file = 'PhotoresistorData.csv'
+file = 'NewMotorData1.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
 RPM_filt = sig.medfilt(Output,kernel_size=5)
 
