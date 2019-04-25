@@ -50,7 +50,7 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.xlabel('Time, Sec')
     plt.legend()
     plt.ylim(np.min(Output),1.3*(np.max(Output)))
-    plt.xlim(np.min(Time),np.max(Time))
+    plt.xlim(np.min(Time),600)
     plt.minorticks_on()
     plt.grid()
     plt.show()
