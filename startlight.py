@@ -55,20 +55,20 @@ for line in fin:
     a = line.strip()                                  #unpacks data from file
     c = a.split(',')
     time, light = c
-    time_list.append(int(time)/1000)
-    light_list.append(light)
+    time_list.append(int(time))
+    light_list.append(int(light))
 Time = np.array(time_list)
 light = np.array(light_list)
 
 total_row = len(time_list)
 
 Input = np.zeros((total_row))
-
+'''
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     #plt.plot(Time, Input, 'b.', label='Input')
-    plt.plot(Time, function(Time, *popt), 'g-',label='Transfer Function')
+    #plt.plot(Time, function(Time, *popt), 'g-',label='Transfer Function')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
@@ -77,17 +77,16 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.minorticks_on()
     plt.grid()
     plt.show()
+'''
 
-
-def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
+def graphData(Time, Output, Time_axis_name, Out_axis_name):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
-    plt.plot(Time, Input, 'b.', label='Input')
+    #plt.plot(Time, Input, 'b.', label='Input')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
-    plt.ylim(0,900)
-    plt.xlim(0,1000)
+    plt.ylim(0,300)
     plt.minorticks_on()
     plt.grid()
     plt.show()
@@ -101,8 +100,8 @@ def function(Time, K, T):
     return K-K*np.exp(-Time/T)
 
 
-popt, pcov = curve_fit(function, Time, light)
+#popt, pcov = curve_fit(function, Time, light)
 
-graphData(Time, input, light, Time_axis_name, Out_axis_name)
-graphDataTF(Time, input, light, Time_axis_name, Out_axis_name)
-print('Transfer Function is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+graphData(Time, light, Time_axis_name, Out_axis_name)
+#graphDataTF(Time, light, Time_axis_name, Out_axis_name)
+#print('Transfer Function is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
