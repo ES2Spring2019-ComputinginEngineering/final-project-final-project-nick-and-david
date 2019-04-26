@@ -11,7 +11,18 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 
-def readDatafile(file):
+def order_input():
+    order = input("Please enter the order of your function: (1) for first order, or (2) for second order: ")
+    if order == str(1):
+        print('First Order')
+    elif order == str(2):
+        print('Second Order')
+    else:
+        print('Please type either 1 or 2')
+        order_input()
+    return order
+
+def readDatafilecsv(file):
     csv_file = open(file)
     total_row = sum(1 for row in csv_file) -1
     csv_file.seek(0)
@@ -45,7 +56,7 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
-    plt.plot(Time, function(Time, *popt), 'g-',label='Step Response')
+    plt.plot(Time, functiongrowth(Time, *popt), 'g-',label='Step Response')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
@@ -70,17 +81,17 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.show()
 
 file = 'PhotoresistorData.csv'
-Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-RPM_filt = sig.medfilt(Output,kernel_size=5)
+Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafilecsv(file)
+output_filt = sig.medfilt(Output,kernel_size=5)
 
 #def Filter(Output)
 
-def function(Time, K, T):
+def functiongrowth(Time, K, T):
     return K-K*np.exp(-Time/T)
 
 n = 24
-popt, pcov = curve_fit(function, Time, Output,bounds=(n,1000))
+popt, pcov = curve_fit(functiongrowth, Time, Output,bounds=(n,1000))
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
-graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
+graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
 print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
