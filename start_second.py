@@ -55,7 +55,7 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period):
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
     plt.plot(Time[1:], Y_t, 'k', label='Step Response')
-    plt.plot(Time[Period[:3]], Output[Period[:3]], 'b.', label='Period')
+    plt.plot(Time[Period[0]], Output[Period[0]], 'b.', Time[n], Output[n], 'b.', label='Period')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
@@ -81,7 +81,7 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
 
 file = 'SecordMotorData.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-RPM_filt = sig.medfilt(Output,kernel_size=5)
+#RPM_filt = sig.medfilt(Output,kernel_size=3)
 
 
 SteadyState, _ = stats.mode(Output)
@@ -97,23 +97,28 @@ Y_t = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d*Time[1:])*
 Optimize_OG = np.sum(np.sqrt((Y_t - Output[1:])**2))
 
 #Check this out!
-
+Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+n = Period[1]
 count = 0
+#neeed to add prompt or function
 
-for i in range(50):
+for i in range(int(len(Output)/4)):
     Delta_Period_Opt = Time[Period[1]+i]-Time[Period[0]]
     Omega_d_Opt = (2*np.pi)/Delta_Period_Opt
     Y_t_Opt = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d_Opt*Time[1:])*np.cos(Omega_d_Opt*Time[1:]-Phi))
     Optimize = np.sum(np.sqrt((Y_t_Opt - Output[1:])**2))
     if Optimize < Optimize_OG:
+        n = n + 1
         Y_t = Y_t_Opt
         Optimize_OG = Optimize
         count = count + 1
         
 print(count)
 
+
+Correlation_post_optimization = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
 #Find best point!
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
-graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
+graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
 #print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
