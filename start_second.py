@@ -52,10 +52,10 @@ def readDatafile(file):
 
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period):
     plt.figure()
-    plt.plot(Time, Output, 'r.', label='Output')
+    plt.plot(Time, RPM_filt, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
     plt.plot(Time[1:], Y_t, 'k', label='Step Response')
-    plt.plot(Time[Period[0]], Output[Period[0]], 'b.', Time[n], Output[n], 'b.', label='Period')
+    plt.plot(Time[Period[0]], RPM_filt[Period[0]], 'b.', Time[n], RPM_filt[n], 'b.')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
@@ -79,25 +79,32 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
     plt.grid()
     plt.show()
 
+def Filter(Output,Kernel):
+    RPM_filt = sig.medfilt(Output,kernel_size=Kernel)
+    return RPM_filt
+
+
 file = 'SecordMotorData.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-#RPM_filt = sig.medfilt(Output,kernel_size=3)
+RPM_filt = Filter(Output,1)
+graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
 
-
-SteadyState, _ = stats.mode(Output)
-OSR = (np.max(Output)-SteadyState)/SteadyState
+#def EstimateCurve()
+SteadyState, _ = stats.mode(RPM_filt)
+OSR = (np.max(RPM_filt)-SteadyState)/SteadyState
 Zeta = -float(np.log(OSR)/np.sqrt(np.pi**2 + np.log(OSR)**2))
 Phi = float(np.arccos(np.sqrt(1-Zeta**2)))
 K_dc = SteadyState/Input[1:]
-Period, _ = sig.find_peaks(Output)
+Period, _ = sig.find_peaks(RPM_filt)
 
 Delta_Period = Time[Period[1]]-Time[Period[0]]
 Omega_d = (2*np.pi)/Delta_Period
 Y_t = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d*Time[1:])*np.cos(Omega_d*Time[1:]-Phi))
-Optimize_OG = np.sum(np.sqrt((Y_t - Output[1:])**2))
+Optimize_OG = np.sum(np.sqrt((Y_t - RPM_filt[1:])**2))
 
 #Check this out!
-Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+Correlation = np.sum((RPM_filt[1:]-np.mean(RPM_filt[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((RPM_filt[1:]-np.mean(RPM_filt[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
 n = Period[1]
 count = 0
 #neeed to add prompt or function
@@ -106,19 +113,16 @@ for i in range(int(len(Output)/4)):
     Delta_Period_Opt = Time[Period[1]+i]-Time[Period[0]]
     Omega_d_Opt = (2*np.pi)/Delta_Period_Opt
     Y_t_Opt = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d_Opt*Time[1:])*np.cos(Omega_d_Opt*Time[1:]-Phi))
-    Optimize = np.sum(np.sqrt((Y_t_Opt - Output[1:])**2))
+    Optimize = np.sum(np.sqrt((Y_t_Opt - RPM_filt[1:])**2))
     if Optimize < Optimize_OG:
         n = n + 1
         Y_t = Y_t_Opt
         Optimize_OG = Optimize
         count = count + 1
-        
-print(count)
 
 
-Correlation_post_optimization = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+Correlation_post_optimization = np.sum((RPM_filt[1:]-np.mean(RPM_filt[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((RPM_filt[1:]-np.mean(RPM_filt[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
 #Find best point!
 
-graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
-graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
+graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
 #print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
