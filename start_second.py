@@ -90,10 +90,29 @@ Zeta = -float(np.log(OSR)/np.sqrt(np.pi**2 + np.log(OSR)**2))
 Phi = float(np.arccos(np.sqrt(1-Zeta**2)))
 K_dc = SteadyState/Input[1:]
 Period, _ = sig.find_peaks(Output)
-Delta_Period = Time[Period[2]]-Time[Period[0]]
-Omega_d = (2*np.pi)/Delta_Period
 
+Delta_Period = Time[Period[1]]-Time[Period[0]]
+Omega_d = (2*np.pi)/Delta_Period
 Y_t = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d*Time[1:])*np.cos(Omega_d*Time[1:]-Phi))
+Optimize_OG = np.sum(np.sqrt((Y_t - Output[1:])**2))
+
+#Check this out!
+
+count = 0
+
+for i in range(50):
+    Delta_Period_Opt = Time[Period[1]+i]-Time[Period[0]]
+    Omega_d_Opt = (2*np.pi)/Delta_Period_Opt
+    Y_t_Opt = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d_Opt*Time[1:])*np.cos(Omega_d_Opt*Time[1:]-Phi))
+    Optimize = np.sum(np.sqrt((Y_t_Opt - Output[1:])**2))
+    if Optimize < Optimize_OG:
+        Y_t = Y_t_Opt
+        Optimize_OG = Optimize
+        count = count + 1
+        
+print(count)
+
+#Find best point!
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
 graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
