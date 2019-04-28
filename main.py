@@ -10,27 +10,26 @@ filename = file + filetype
 if filetype == '.csv':
     Time, Input, Output,Time_axis_name, Out_axis_name = s1.readDatafilecsv(filename)
 elif filetype == '.txt':
-    x=1
-    #txt reader
+    Time, Output, Input, Time_axis_name, Out_axis_name = s1.text_reader(filename)
 else:
     print("unsupported data type")
-
 
 s1.graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 
 filter = input('Please enter whether you would like to filter your data: 1=yes 2=no: ')
-if filter == 1:
-    output_filt = sig.medfilt(Output,kernel_size=5)
+if filter == 1
+    output_filt = s2.Filter(Output)
 elif filter == 2:
     output_filt = output
 
 order = s1.order_input()
 
-datatype = input("Please enter whether this is growth or decay: (1) for growth, or (2) for decay: ")
-        if datatype == 1:
-            order = 1.1
-        elif datatype == 2:
-            order = 1.2
+if order == 1:
+    datatype = input("Please enter whether this is growth or decay: (1) for growth, or (2) for decay: ")
+            if datatype == 1:
+                order = 1.1
+            elif datatype == 2:
+                order = 1.2
 
 if order == 1.1:
     s1.funtiongrowth()
