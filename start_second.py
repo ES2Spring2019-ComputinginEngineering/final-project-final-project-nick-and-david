@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 from scipy import stats
+import start as s1
 
 def readDatafile(file):
     csv_file = open(file)
@@ -80,21 +81,20 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
     plt.show()
 
 def Filter(Output):
-    while True:
-        to_filter = np.copy(Output)
-        Kernel = input('Please enter whether you would like to filter your data: 1=yes 2=no: ')
-        RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
-        s1.graphData(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
-        again = input('If you would like to try a different kernel size, press '1'. If not, press '2'')
-        if again == 2:
-            break
+    to_filter = np.copy(Output)
+    Kernel = int(input('Please enter the kernel size you would like: '))
+    RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
+    s1.graphData(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
+    again = input("If you would like to try a different kernel size, press '1'. If not, press '2'")
+    if again == '1':
+        Filter(Output)
     return RPM_filt
 
-
+'''
 file = 'SecordMotorData.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-RPM_filt = Filter(Output,1)
-graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
+#RPM_filt = Filter(Output)
+#graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
 
 #def EstimateCurve()
 SteadyState, _ = stats.mode(RPM_filt)
@@ -133,3 +133,4 @@ Correlation_post_optimization = np.sum((RPM_filt[1:]-np.mean(RPM_filt[1:]))*(Y_t
 
 graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
 #print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+'''
