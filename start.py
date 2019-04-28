@@ -11,6 +11,25 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 
+def text_reader(filename):
+    fin = open(filename)
+    time_list = []
+    output_list = []
+    for line in fin:
+        a = line.strip()
+        c = a.split(',')
+        time, output = c
+        time_list.append(float(time))
+        output_list.append(int(output))
+    Time = np.array(time_list)
+    Output = np.array(temp_list)
+    total_row = len(time_list)
+    Input = np.ones((total_row,))
+    Time_axis_name = 'Time (milliseconds)'
+    Out_axis_name = 'Output'
+    return Time, Output, Input, Time_axis_name, Out_axis_name
+
+
 def order_input():
     order = input("Please enter the order of your function: (1) for first order, or (2) for second order: ")
     if order == str(1):
