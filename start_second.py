@@ -79,8 +79,15 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
     plt.grid()
     plt.show()
 
-def Filter(Output,Kernel):
-    RPM_filt = sig.medfilt(Output,kernel_size=Kernel)
+def Filter(Output):
+    while True:
+        to_filter = np.copy(Output)
+        Kernel = input('Please enter whether you would like to filter your data: 1=yes 2=no: ')
+        RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
+        s1.graphData(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
+        again = input('If you would like to try a different kernel size, press '1'. If not, press '2'')
+        if again == 2:
+            break
     return RPM_filt
 
 
