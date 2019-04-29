@@ -104,11 +104,6 @@ def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
 
-def curveFitDecay(Time, Output, n):
-    Function = K-K*np.exp(-Time/T)
-    popt, pcov = curve_fit(Function, Time, Output,bounds=(n,1000))
-    return popt, pcov
- 
 def Print():
     print('The step response is:',round(popt[0],3),'(1-e^(-t/'+str(round(popt[1]),3)+'),3)')
 
