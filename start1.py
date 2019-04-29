@@ -12,7 +12,7 @@ import scipy.signal as sig
 from scipy.optimize import curve_fit
 
 def order_input():
-    order = input("Please enter the order of your function: (1) for first order, or (2) for second order: ")
+    order = input("Please enter the order of your function: (1) for first order, or (2) for second order(Under-Damped): ")
     if order != '1' and order != '2':
         print('Please type either 1 or 2')
         order_input()
@@ -106,6 +106,7 @@ def Filter(Output,Kernel):
 
 def Print():
     print('The step response is:',round(popt[0],3),'(1-e^(-t/'+str(round(popt[1]),3)+'),3)')
+
 
 #graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 #graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)

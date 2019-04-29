@@ -43,10 +43,9 @@ elif order == 1.2:
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
     print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
 elif order == '2':
-    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG = s2.EstimateSecondOrderCurve(Output, Input, Time)
-    n=1
-    s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
+    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n = s2.EstimateSecondOrderCurve(Output, Input, Time)
+    s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t, n)
     optimize = input('Would you like to optimize this curve? 1=yes 2=no: ')
     if optimize == '1':
-        Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG)
+        Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n)
         s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
