@@ -104,8 +104,6 @@ def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
 
-def Print():
-    print('The step response is:',round(popt[0],3),'(1-e^(-t/'+str(round(popt[1]),3)+'),3)')
 
 
 #graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
