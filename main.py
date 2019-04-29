@@ -32,7 +32,7 @@ if order == '1':
         order = 1.2
 
 if order == 1.1:
-    Function = K-K*np.exp(-Time/T)
+    Function = functionGrowth(Time, K, T)
     n = 24
     popt, pcov = curve_fit(Function, Time, Output,bounds=(n,1000))
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
