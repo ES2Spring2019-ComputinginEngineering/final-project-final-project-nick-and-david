@@ -1,5 +1,5 @@
-import start as s1
-import start_second as s2
+import start1 as s1
+import start_second1 as s2
 from scipy.optimize import curve_fit
 
 
@@ -10,7 +10,7 @@ filename = file + filetype
 if filetype == '.csv':
     Time, Input, Output,Time_axis_name, Out_axis_name = s1.readDatafilecsv(filename)
 elif filetype == '.txt':
-    Time, Output, Input, Time_axis_name, Out_axis_name = s1.text_reader(filename)
+    Time, Output, Input, Time_axis_name, Out_axis_name = s1.readDatafiletext(filename)
 else:
     print("unsupported data type")
 
@@ -18,29 +18,35 @@ s1.graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 
 filter = input('Please enter whether you would like to filter your data: 1=yes 2=no: ')
 if filter == '1':
-    output_filt = s2.Filter(Output)
+    output_filt = s2.Filter(Output, Time, Input, Time_axis_name, Out_axis_name)
 elif filter == '2':
-    output_filt = output
+    output_filt = Output
 
 order = s1.order_input()
 
 if order == '1':
     datatype = input("Please enter whether this is growth or decay: (1) for growth, or (2) for decay: ")
-    if datatype == 1:
+    if datatype == '1':
         order = 1.1
-    elif datatype == 2:
+    elif datatype == '2':
         order = 1.2
 
 if order == 1.1:
-    s1.funtiongrowth()
+    Function = K-K*np.exp(-Time/T)
     n = 24
-    popt, pcov = curve_fit(functiongrowth, Time, Output,bounds=(n,1000))
+    popt, pcov = curve_fit(Function, Time, Output,bounds=(n,1000))
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
     print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
 elif order == 1.2:
-    x=1
-    #decay
-elif order == 2:
-    x=1
-    #second order
-    #ask about optimization
+    s1.functiondecay(Time, K, T)
+    popt, pcov = curve_fit(functiongrowth, Time, Output)
+    s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
+    print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+elif order == '2':
+    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG = s2.EstimateSecondOrderCurve
+    n=1
+    s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
+    optimize = input('Would you like to optimize this curve? 1=yes 2=no: ')
+    if optimize == '1':
+        Y_t, n = OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG)
+        s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
