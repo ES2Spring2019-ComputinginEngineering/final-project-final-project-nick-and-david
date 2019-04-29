@@ -66,11 +66,11 @@ def readDatafilecsv(file):
             
     return Time, Input, Output,Time_axis_name, Out_axis_name
 
-def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name):
+def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, popt):
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
-    plt.plot(Time, functiongrowth(Time, *popt), 'g-',label='Step Response')
+    plt.plot(Time, functionGrowth(Time, *popt), 'g-',label='Step Response')
     plt.ylabel(Out_axis_name)
     plt.xlabel(Time_axis_name)
     plt.legend()
