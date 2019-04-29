@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 from scipy import stats
+import start1 as s1
 
 def readDatafile(file):
     csv_file = open(file)
@@ -79,10 +80,15 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
     plt.grid()
     plt.show()
 
-def Filter(Output,Kernel):
-    RPM_filt = sig.medfilt(Output,kernel_size=Kernel)
+def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):
+    to_filter = np.copy(Output)
+    Kernel = int(input('Please enter the kernel size you would like (odd integers only): '))
+    RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
+    s1.graphData(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
+    again = input("If you would like to try a different kernel size, press '1'. If not, press '2': ")
+    if again == '1':
+        Filter(Output, Time, Input, Time_axis_name, Out_axis_name)
     return RPM_filt
-
 
 def EstimateSecondOrderCurve(Output,Input,Time):
     SteadyState, _ = stats.mode(Output)
