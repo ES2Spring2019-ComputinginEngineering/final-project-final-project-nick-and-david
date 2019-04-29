@@ -13,14 +13,28 @@ from scipy.optimize import curve_fit
 
 def order_input():
     order = input("Please enter the order of your function: (1) for first order, or (2) for second order: ")
-    if order == str(1):
-        print('First Order')
-    elif order == str(2):
-        print('Second Order')
-    else:
+    if order != '1' and order != '2':
         print('Please type either 1 or 2')
         order_input()
     return order
+
+def readDatafiletext(filename):
+    fin = open(filename)
+    time_list = []
+    output_list = []
+    for line in fin:
+        a = line.strip()
+        c = a.split(',')
+        time, output = c
+        time_list.append(float(time))
+        output_list.append(int(output))
+    Time = np.array(time_list)
+    Output = np.array(temp_list)
+    total_row = len(time_list)
+    Input = np.ones((total_row,))
+    Time_axis_name = 'Time (milliseconds)'
+    Out_axis_name = 'Output'
+    return Time, Output, Input, Time_axis_name, Out_axis_name
 
 def readDatafilecsv(file):
     csv_file = open(file)
@@ -90,7 +104,8 @@ def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
 
-def curveFit(Time, Output, Function, n):
+def curveFitDecay(Time, Output, n):
+    Function = K-K*np.exp(-Time/T)
     popt, pcov = curve_fit(Function, Time, Output,bounds=(n,1000))
     return popt, pcov
  
