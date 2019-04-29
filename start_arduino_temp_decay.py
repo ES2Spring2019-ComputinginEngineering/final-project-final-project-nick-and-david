@@ -78,7 +78,7 @@ Output = Output/(np.max(Output)-np.min(Output))
 Input = Input/np.max(Output)-np.min(Output)
 Time = Time/1000
 #End normilized
-RPM_filt = sig.medfilt(Output,kernel_size=5)
+Output_filt = sig.medfilt(Output,kernel_size=5)
 
 #def Filter(Output)
 
@@ -86,8 +86,8 @@ def function(Time, K, T):
     return K*np.exp(-Time/T)  #for step up k(1-e), for decay k*e
 
 
-popt, pcov = curve_fit(function, Time, Output,bounds=([0,0],[1.2,10000]))
+popt, pcov = curve_fit(function, Time, Output,)
 
 graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
-graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
-print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
+graphDataTF(Time, Input, Output_filt, Time_axis_name, Out_axis_name)
+print('The step response is:',popt[0],'e^(-t/'+str(popt[1])+')')

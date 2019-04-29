@@ -72,9 +72,9 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
 file = 'Arduino_Temp_Data1.csv'
 Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
 # Normilized Data
-Output = (Output + 13.38)
-Input = Input + 13.38
-Input = Input/np.max(Output)-np.min(Output)
+Input = Input/np.max(Output)
+Output = (Output + abs(np.min(Output)))
+Input = Input + abs(np.min(Output))
 Time = Time/1000
 Time = Time - np.min(Time)
 Output = Output/(np.max(Output)-np.min(Output))
