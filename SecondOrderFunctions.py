@@ -107,7 +107,7 @@ def EstimateSecondOrderCurve(Output,Input,Time):
     return Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n
 
 def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n):
-    for i in range(int(len(Output)/4)):
+    for i in range(int(len(Output)/2)):
         Delta_Period_Opt = Time[Period[1]+i]-Time[Period[0]]
         Omega_d_Opt = (2*np.pi)/Delta_Period_Opt
         Y_t_Opt = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d_Opt*Time[1:])*np.cos(Omega_d_Opt*Time[1:]-Phi))
