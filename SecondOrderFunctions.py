@@ -84,8 +84,9 @@ def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):
     Kernel = int(input('Please enter the kernel size you would like (odd integers only): '))
     RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
     s1.graphData(Time, Input, RPM_filt, Time_axis_name, Out_axis_name)
-    again = input("If you would like to try a different kernel size, press '1'. If not, press '2': ")
-    if again == '1':
+    message = "If you would like to try a different kernel size, press '1'. If not, press '2': "
+    again = int(s1.yesOrNo(message))
+    if again == 1:
         Filter(Output, Time, Input, Time_axis_name, Out_axis_name)
     return RPM_filt
 
