@@ -27,13 +27,15 @@ else:
 
 s1.graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
 
-filter = input('Please enter whether you would like to filter your data: 1=yes 2=no: ')
+message = 'Please enter whether you would like to filter your data: 1=yes 2=no: '
+filter = s1.yesOrNo(message)
 if filter == '1':
     output_filt = s2.Filter(Output, Time, Input, Time_axis_name, Out_axis_name)
 elif filter == '2':
     output_filt = Output
 
-order = s1.order_input()
+message = 'Is this data first order (1) or second order (2)?: '
+order = s1.yesOrNo(message)
 
 
 if order == '1':
@@ -54,8 +56,8 @@ elif order == '2':
         s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
 
 if order == '1':
-    print('Does this curve fit the data?')
-    answer = input('Yes(1) or No (2):')
+    message = 'Does this curve fit the data?'
+    answer = s1.yesOrNo(message)
     if answer == '1':
         print('Great!')
     elif answer == '2':
