@@ -29,7 +29,7 @@ def readDatafiletext(filename):
         time_list.append(float(time))
         output_list.append(int(output))
     Time = np.array(time_list)
-    Output = np.array(temp_list)
+    Output = np.array(output_list)
     total_row = len(time_list)
     Input = np.ones((total_row,))
     Time_axis_name = 'Time (milliseconds)'

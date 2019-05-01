@@ -17,9 +17,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sig
-from scipy.optimize import curve_fit
 from scipy import stats
-import start1 as s1
+import FirstOrderFunctions as s1
 
 def readDatafile(file):
     csv_file = open(file)
@@ -121,13 +120,3 @@ def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimiz
     print('New correlation is:',Correlation_post_optimization)
     return Y_t, n
 
-
-
-#Find best point!
-#graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
-#graphData(Time, Input, Output, Time_axis_name, Out_axis_name, Period)
-#file = 'SecordMotorData.csv'
-#Time, Input, Output,Time_axis_name, Out_axis_name =  readDatafile(file)
-#RPM_filt = Filter(Output,1)
-#graphDataTF(Time, Input, RPM_filt, Time_axis_name, Out_axis_name, Period)
-#print('The step response is:',popt[0],'(1-e^(-t/'+str(popt[1])+')')
