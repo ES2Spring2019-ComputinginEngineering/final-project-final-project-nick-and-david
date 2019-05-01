@@ -11,12 +11,13 @@ import matplotlib.pyplot as plt
 import scipy.signal as sig
 from scipy.optimize import curve_fit
 
-def order_input():
-    order = input("Please enter the order of your function: (1) for first order, or (2) for second order(Under-Damped): ")
-    if order != '1' and order != '2':
+def yesOrNo(message):
+    answer = input(message)
+    if answer != '1' and answer != '2':
         print('Please type either 1 or 2')
-        order_input()
-    return order
+        yesOrNo(message)
+    elif answer == '1' or answer == '2':
+        return answer
 
 def readDatafiletext(filename):
     fin = open(filename)
@@ -97,18 +98,8 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
 def functionGrowth(Time, K, T):
     return K-K*np.exp(-Time/T)
 
-def functionDecay(Time, K, T):
-    return K*np.exp(-Time/T)
-
-#def correlation():
-
 
 def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
-
-
-
-#graphData(Time, Input, Output, Time_axis_name, Out_axis_name)
-#graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name)
 
