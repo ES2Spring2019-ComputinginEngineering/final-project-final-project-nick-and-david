@@ -9,7 +9,6 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sig
-from scipy.optimize import curve_fit
 
 def yesOrNo(message):
     while True:

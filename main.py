@@ -39,7 +39,6 @@ order = s1.yesOrNo(message)
 
 
 if order == '1':
-    #Function = functionGrowth(Time, K, T)
     popt, pcov = curve_fit(s1.functionGrowth, Time, Output, bounds=(.1, 10000000))
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
     resultArray = popt[0]-popt[0]*np.exp(-Time/popt[1])
