@@ -1,6 +1,6 @@
 # Auto-Parsing Step Responses
 
-Short project description here
+Short project description here (2 sentences)
 
 ## Instructions
 
@@ -18,8 +18,7 @@ Create a list of all of the files in your repository with one sentence descripti
 - 
 
 ## Features
-
-
+descriptions of any key design choices (for example what methods your applied) and what libraries or functions were important in the design.
 
 
 
