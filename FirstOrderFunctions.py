@@ -12,12 +12,13 @@ import scipy.signal as sig
 from scipy.optimize import curve_fit
 
 def yesOrNo(message):
-    answer = input(message)
-    if answer != '1' and answer != '2':
-        print('Please type either 1 or 2')
-        yesOrNo(message)
-    elif answer == '1' or answer == '2':
-        return answer
+    while True:
+        answer = input(message)
+        if answer != '1' and answer != '2':
+            print('Please type either 1 or 2')
+        elif answer == '1' or answer == '2':
+            break
+    return answer
 
 def readDatafiletext(filename):
     fin = open(filename)
