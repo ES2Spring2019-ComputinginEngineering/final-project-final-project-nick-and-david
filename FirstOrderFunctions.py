@@ -100,6 +100,9 @@ def functionGrowth(Time, K, T):
 def functionDecay(Time, K, T):
     return K*np.exp(-Time/T)
 
+#def correlation():
+
+
 def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
