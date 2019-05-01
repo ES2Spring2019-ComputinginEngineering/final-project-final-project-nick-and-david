@@ -40,6 +40,8 @@ if order == '1':
     #Function = functionGrowth(Time, K, T)
     popt, pcov = curve_fit(s1.functionGrowth, Time, Output, bounds=(.1, 10000000))
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
+    resultArray = popt[0]-popt[0]*np.exp(-Time/popt[1])
+    print(resultArray)
     print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
     
     
@@ -66,5 +68,3 @@ if order == '1':
             popt, pcov = curve_fit(s1.functionGrowth, Time, Output,bounds=([m1,n1],[m2,n2]))
             s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
             print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
-
-        
