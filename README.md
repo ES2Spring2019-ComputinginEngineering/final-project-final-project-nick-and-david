@@ -1,6 +1,6 @@
 # Auto-Parsing Step Responses
 
-Step responses can be found in almost any system, including living biological systems and non-living mecanical systems. This project sets out to automatically produce a function that represents this step response for both first and second order step responses given inputted data.
+Step responses can be found in many systems, including living biological systems and non-living mecanical systems. This project sets out to automatically produce a function that represents this step response for both first and second order step responses given inputted data.
 
 ## Instructions
 
