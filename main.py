@@ -40,7 +40,8 @@ if order == '1':                                                                
     popt, pcov = curve_fit(s1.functionGrowth, Time, Output, bounds=(.1, 10000000))
     s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
     resultArray = popt[0]-popt[0]*np.exp(-Time/popt[1])
-    Correlation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/(np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
+    Correlation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/\
+                  (np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
     print('Correlation is:',round(Correlation,2))
     print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
     
@@ -48,7 +49,8 @@ if order == '1':                                                                
 elif order == '2':                                                                 #if second order, runs through fitting a second order curve to the data, along with optimizing this curve if desired
     Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState = s2.EstimateSecondOrderCurve(Output, Input, Time)
     s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t, n)
-    print('The step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),'*',round(Omega_d,3),'*t))*(cos(',round(Omega_d,3),'*t','-',round(Phi,2),'))')
+    print('The step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),
+          '*',round(Omega_d,3),'*t))*(cos(',round(Omega_d,3),'*t','-',round(Phi,2),'radians))')
     optimize = input('Would you like to optimize this curve? 1=yes 2=no: ')
     if optimize == '1':
         Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState)
