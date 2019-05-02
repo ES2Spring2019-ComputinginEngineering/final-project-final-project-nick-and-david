@@ -21,7 +21,7 @@ from scipy import stats
 import FirstOrderFunctions as s1
 
 
-def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n):
+def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n):                 #graphs data with the transfer function and identified peaks of data (for period) printed on the graph
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
@@ -36,22 +36,9 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,
     plt.minorticks_on()
     plt.grid()
     plt.show()
-    
-    
-def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
-    plt.figure()
-    plt.plot(Time, Output, 'r.', label='Output')
-    plt.ylabel(Out_axis_name)
-    plt.xlabel(Time_axis_name+', Milliseconds')
-    plt.legend()
-    plt.ylim(0,1.3*(np.max(Output)))
-    plt.xlim(0,np.max(Time))
-    plt.minorticks_on()
-    plt.grid()
-    plt.show()
 
 
-def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):
+def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):                                        #
     to_filter = np.copy(Output)
     Kernel = int(input('Please enter the kernel size you would like (odd integers only): '))
     RPM_filt = sig.medfilt(to_filter,kernel_size=Kernel)
@@ -75,7 +62,8 @@ def EstimateSecondOrderCurve(Output,Input,Time):
     Omega_d = (2*np.pi)/Delta_Period
     Y_t = K_dc*Input[1:]*(1-(1/(np.sqrt(1-Zeta**2)))*np.exp(-Zeta*Omega_d*Time[1:])*np.cos(Omega_d*Time[1:]-Phi))
     Optimize_OG = np.sum(np.sqrt((Y_t - Output[1:])**2))
-    Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+    Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/\
+                  (np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
     print('Correlation is:',Correlation)
     return Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState
 
@@ -91,8 +79,9 @@ def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimiz
             Y_t = Y_t_Opt
             Optimize_OG = Optimize
     n = n + num
-    Correlation_post_optimization = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
+    Correlation_post_optimization = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/\
+                                    (np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
     print('New correlation is:',Correlation_post_optimization)
-    print('The new step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),'*',round(Omega_d_Opt,3),'*t))*(cos(',round(Omega_d_Opt,3),'*t','-',round(Phi,2),'))')
+    print('The new step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round
+    (Zeta,2),'*',round(Omega_d_Opt,3),'*t))*(cos(',round(Omega_d_Opt,3),'*t','-',round(Phi,2),'radians))')
     return Y_t, n
-
