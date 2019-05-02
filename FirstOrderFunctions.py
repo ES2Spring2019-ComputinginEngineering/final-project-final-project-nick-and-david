@@ -94,8 +94,3 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):              
 
 def functionGrowth(Time, K, T):                                                    #function for first order growth for use in the curvefit function
     return K-K*np.exp(-Time/T)
-
-
-def Filter(Output,Kernel):                                                          #filters the data based on the user's desired kernel size
-    Output_filt = sig.medfilt(Output,kernel_size=Kernel)
-    return Output_filt
