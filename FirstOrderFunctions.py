@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sig
 
-def yesOrNo(message):
+def yesOrNo(message):                           #requires the user to input 1 or 2 as fits from the question
     while True:
         answer = input(message)
         if answer != '1' and answer != '2':
@@ -20,7 +20,7 @@ def yesOrNo(message):
     return answer
 
 
-def readDatafiletext(filename):
+def readDatafiletext(filename):                 #parses data for use later from a text file
     fin = open(filename)
     time_list = []
     output_list = []
@@ -39,7 +39,7 @@ def readDatafiletext(filename):
     return Time, Output, Input, Time_axis_name, Out_axis_name
 
 
-def readDatafilecsv(file):
+def readDatafilecsv(file):                          #parses data for use later from a csv file
     csv_file = open(file)
     total_row = sum(1 for row in csv_file) -1
     csv_file.seek(0)
@@ -63,7 +63,7 @@ def readDatafilecsv(file):
     return Time, Input, Output,Time_axis_name, Out_axis_name
 
 
-def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, popt):
+def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, popt):      #graphs the data with the curve printed on the graph
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
@@ -78,7 +78,7 @@ def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, popt):
     plt.show()
     
     
-def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
+def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):               #graphs the data without the curve
     plt.figure()
     plt.plot(Time, Output, 'r.', label='Output')
     plt.plot(Time, Input, 'b.', label='Input')
@@ -92,10 +92,10 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.show()
 
 
-def functionGrowth(Time, K, T):
+def functionGrowth(Time, K, T):                                                    #function for first order growth for use in the curvefit function
     return K-K*np.exp(-Time/T)
 
 
-def Filter(Output,Kernel):
+def Filter(Output,Kernel):                                                          #filters the data based on the user's desired kernel size
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
