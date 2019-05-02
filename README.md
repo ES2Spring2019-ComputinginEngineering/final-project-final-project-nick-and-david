@@ -15,7 +15,7 @@ Short project description here (2 sentences)
 Create a list of all of the files in your repository with one sentence descriptions 
 
 - ArduinoTempCollectionProgram.ino contains a program that can be run on an arduino microprocessor to collect temperature data.
-- 
+- FirstOrderFunctions.py contains all functions related to the parsing of data, graphing of data, and curve-fitting of data for the first order step response.
 
 ## Features
 descriptions of any key design choices (for example what methods your applied) and what libraries or functions were important in the design.
