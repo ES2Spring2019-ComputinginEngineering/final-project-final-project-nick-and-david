@@ -20,10 +20,10 @@ Step responses can be found in almost any system, including living biological sy
 - MicroBitTempCollectionProgram.py contains the program that can be run on the micro:Bit to collect temperature data and write it to a text document.
 - MotorData.csv contains data collected from a DC motor through an arduino the records the output of the motor over time (first order response) as a .csv file.
 - PhotoresistorData.csv contains data from a photoresistor sensor in an automatic night-light as a .csv file.
-- SecOrdMotorData1.csv 
+- SecOrdMotorData1.csv contains data from a second order response of a DC motor collected through an arduino microprocessor.
 - SecondOrderFunctions.py contains all functions related to the parsing of data, graphing of data, curve-fitting of data, and optimization of this curve for the second order step response.
-- SecordMotorData.csv 
-- TemperatureData.csv 
+- SecordMotorData.csv contains additional data from a second order response of a DC motor collected through an arduino microprocessor.
+- TemperatureData.csv contains data of a temperature response collected through an arduino microprocessor running the file ArduinoTempCollectionProgram.ino .
 - main.py is the driver of all aforementioned functions. The data included in this repository can be run through this driver.
 
 ## Features
