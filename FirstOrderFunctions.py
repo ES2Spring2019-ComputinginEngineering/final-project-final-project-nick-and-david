@@ -19,6 +19,7 @@ def yesOrNo(message):
             break
     return answer
 
+
 def readDatafiletext(filename):
     fin = open(filename)
     time_list = []
@@ -37,22 +38,17 @@ def readDatafiletext(filename):
     Out_axis_name = 'Output'
     return Time, Output, Input, Time_axis_name, Out_axis_name
 
+
 def readDatafilecsv(file):
     csv_file = open(file)
     total_row = sum(1 for row in csv_file) -1
     csv_file.seek(0)
-    
     csv_reader = csv.reader(csv_file, delimiter=',')
-    
     line_count = 0
-    
     Time = np.zeros((total_row,))
     Input = np.zeros((total_row,))
     Output = np.zeros((total_row,))
-    
-    
     index = 0
-    
     for row in csv_reader:
         if line_count == 0:
             Time_axis_name = row[0]
@@ -64,8 +60,8 @@ def readDatafilecsv(file):
             Output[index] = float(row[2])
             index += 1
             line_count += 1
-            
     return Time, Input, Output,Time_axis_name, Out_axis_name
+
 
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, popt):
     plt.figure()
@@ -95,6 +91,7 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name):
     plt.grid()
     plt.show()
 
+
 def functionGrowth(Time, K, T):
     return K-K*np.exp(-Time/T)
 
@@ -102,4 +99,3 @@ def functionGrowth(Time, K, T):
 def Filter(Output,Kernel):
     Output_filt = sig.medfilt(Output,kernel_size=Kernel)
     return Output_filt
-
