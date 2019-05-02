@@ -71,6 +71,7 @@ if order == '1':                                                                
         if order == '1':
             popt, pcov = curve_fit(s1.functionGrowth, Time, Output,bounds=([m1,n1],[m2,n2]))
             s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
-            NewCorrelation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/(np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
+            NewCorrelation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/\
+                             (np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
             print('New Correlation is:',round(NewCorrelation,2))
             print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
