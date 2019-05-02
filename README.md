@@ -1,6 +1,6 @@
 # Auto-Parsing Step Responses
 
-Short project description here (2 sentences)
+Step responses can be found in almost any system, including living biological systems and non-living mecanical systems. This project sets out to automatically produce a function that represents this step response for both first and second order step responses given inputted data.
 
 ## Instructions
 
@@ -12,8 +12,6 @@ Short project description here (2 sentences)
 
 ## File List
 
-Create a list of all of the files in your repository with one sentence descriptions 
-
 - ArduinoTempCollectionProgram.ino contains a program that can be run on an arduino microprocessor to collect temperature data.
 - FirstOrderFunctions.py contains all functions related to the parsing of data, graphing of data, and curve-fitting of data for the first order step response.
 - LightData.txt contains data collected from the micro:Bit's light sensor as a text document.
@@ -23,10 +21,11 @@ Create a list of all of the files in your repository with one sentence descripti
 - MotorData.csv contains data collected from a DC motor through an arduino the records the output of the motor over time (first order response) as a .csv file.
 - PhotoresistorData.csv contains data from a photoresistor sensor in an automatic night-light as a .csv file.
 - SecOrdMotorData1.csv 
-- SecondOrderFunctions.py
+- SecondOrderFunctions.py contains all functions related to the parsing of data, graphing of data, curve-fitting of data, and optimization of this curve for the second order step response.
 - SecordMotorData.csv 
 - TemperatureData.csv 
-- main.py
+- main.py is the driver of all aforementioned functions. The data included in this repository can be run through this driver.
+
 ## Features
 descriptions of any key design choices (for example what methods your applied) and what libraries or functions were important in the design.
 
