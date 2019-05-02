@@ -104,9 +104,9 @@ def EstimateSecondOrderCurve(Output,Input,Time):
     Optimize_OG = np.sum(np.sqrt((Y_t - Output[1:])**2))
     Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
     print('Correlation is:',Correlation)
-    return Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n
+    return Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState
 
-def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n):
+def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState):
     for i in range(int(len(Output)/2)):
         Delta_Period_Opt = Time[Period[1]+i]-Time[Period[0]]
         Omega_d_Opt = (2*np.pi)/Delta_Period_Opt
@@ -119,5 +119,6 @@ def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimiz
     n = n + num
     Correlation_post_optimization = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
     print('New correlation is:',Correlation_post_optimization)
+    print('The new step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),'*',round(Omega_d_Opt,3),'*t))*(cos(',round(Omega_d_Opt,3),'*t','-',round(Phi,2),'))')
     return Y_t, n
 
