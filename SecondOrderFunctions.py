@@ -20,35 +20,6 @@ import scipy.signal as sig
 from scipy import stats
 import FirstOrderFunctions as s1
 
-def readDatafile(file):
-    csv_file = open(file)
-    total_row = sum(1 for row in csv_file) -1
-    csv_file.seek(0)
-    
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    
-    line_count = 0
-    
-    Time = np.zeros((total_row,))
-    Input = np.zeros((total_row,))
-    Output = np.zeros((total_row,))
-    
-    
-    index = 0
-    
-    for row in csv_reader:
-        if line_count == 0:
-            Time_axis_name = row[0]
-            Out_axis_name = row[2]
-            line_count += 1
-        else:
-            Time[index] = float(row[0])
-            Input[index] = float(row[1])
-            Output[index] = float(row[2])
-            index += 1
-            line_count += 1
-            
-    return Time, Input, Output,Time_axis_name, Out_axis_name
 
 def graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n):
     plt.figure()
@@ -79,6 +50,7 @@ def graphData(Time, Input, Output, Time_axis_name, Out_axis_name,Period):
     plt.grid()
     plt.show()
 
+
 def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):
     to_filter = np.copy(Output)
     Kernel = int(input('Please enter the kernel size you would like (odd integers only): '))
@@ -89,6 +61,7 @@ def Filter(Output, Time, Input, Time_axis_name, Out_axis_name):
     if again == 1:
         Filter(Output, Time, Input, Time_axis_name, Out_axis_name)
     return RPM_filt
+
 
 def EstimateSecondOrderCurve(Output,Input,Time):
     SteadyState, _ = stats.mode(Output)
@@ -105,6 +78,7 @@ def EstimateSecondOrderCurve(Output,Input,Time):
     Correlation = np.sum((Output[1:]-np.mean(Output[1:]))*(Y_t-np.mean(Y_t)))/(np.sqrt(np.sum(((Output[1:]-np.mean(Output[1:]))**2))*np.sum((Y_t-np.mean(Y_t))**2)))
     print('Correlation is:',Correlation)
     return Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState
+
 
 def OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState):
     for i in range(int(len(Output)/2)):
