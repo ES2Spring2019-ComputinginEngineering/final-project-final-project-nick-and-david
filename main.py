@@ -48,12 +48,14 @@ if order == '1':
     
     
 elif order == '2':
-    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n = s2.EstimateSecondOrderCurve(Output, Input, Time)
+    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState = s2.EstimateSecondOrderCurve(Output, Input, Time)
     s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t, n)
+    print('The step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),'*',round(Omega_d,3),'*t))*(cos(',round(Omega_d,3),'*t','-',round(Phi,2),'))')
     optimize = input('Would you like to optimize this curve? 1=yes 2=no: ')
     if optimize == '1':
-        Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n)
+        Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState)
         s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
+
 
 if order == '1':
     message = 'Does this curve fit the data? 1=yes 2=no: '
