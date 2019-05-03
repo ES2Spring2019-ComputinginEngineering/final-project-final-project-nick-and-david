@@ -51,14 +51,18 @@ if order == '1':                                                                
     
     
 elif order == '2':                                                                 #if second order, runs through fitting a second order curve to the data, along with optimizing this curve if desired
-    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState = s2.EstimateSecondOrderCurve(Output, Input, Time)
+    Zeta, Phi, K_dc, Period, Omega_d, Y_t, Optimize_OG, n, SteadyState, Correlation = s2.EstimateSecondOrderCurve(Output, Input, Time)
     s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t, n)
     print('The step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round(Zeta,2),
           '*',round(Omega_d,3),'*t))*(cos(',round(Omega_d,3),'*t','-',round(Phi,2),'radians))')
+    print('Correlation is:',Correlation)
     optimize = input('Would you like to optimize this curve? 1=yes 2=no: ')
     if optimize == '1':
-        Y_t, n = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState)
+        Y_t, n, Correlation_post_optimization, Omega_d_Opt = s2.OptimizeCurve(Output, Period, K_dc, Input, Zeta, Omega_d, Time, Phi, Optimize_OG, n, SteadyState)
         s2.graphDataTF(Time, Input, Output, Time_axis_name, Out_axis_name, Period, Y_t,n)
+    print('The new step response is: (',round(SteadyState[0],2),')*(1-(1/(sqrt(1-', round(Zeta,2),'^2)))*(e^(-',round
+    (Zeta,2),'*',round(Omega_d_Opt,3),'*t))*(cos(',round(Omega_d_Opt,3),'*t','-',round(Phi,2),'radians))')
+    print('New correlation is:',Correlation_post_optimization)
 
 
 if order == '1':                                                                #if first order, allows the user to manually manipulate the variables to optimize the curve to their data
