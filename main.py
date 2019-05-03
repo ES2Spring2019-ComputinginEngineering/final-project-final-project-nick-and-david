@@ -20,6 +20,10 @@ if filetype == '.csv':                                                       #us
          Time = Time - np.min(Time)
 elif filetype == '.txt':
     Time, Output, Input, Time_axis_name, Out_axis_name = s1.readDatafiletext(filename)
+    if np.min(Time) > 0:
+     print('Since some of the time data did not start at 0, the data was normalized.')
+     Time = Time - np.min(Time)
+
 else:
     print("unsupported data type")
 
