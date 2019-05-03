@@ -65,21 +65,28 @@ elif order == '2':                                                              
     print('New correlation is:',Correlation_post_optimization)
 
 
-if order == '1':                                                                #if first order, allows the user to manually manipulate the variables to optimize the curve to their data
-    message = 'Does this curve fit the data? 1=yes 2=no: '
-    answer = s1.yesOrNo(message)
-    if answer == '1':
-        print('Great!')
-    elif answer == '2':
-        print("Changing boundaries for the time constant and K_dc can often improve proformance.")
-        n1 = input('Time constant minimum? (Change based on previous results): ')
-        n2 = input('Time constant maximum?: ')
-        m1 = input('Steady State value minimum?: ')
-        m2 = input('Steady State value maximum?: ')
-        if order == '1':
-            popt, pcov = curve_fit(s1.functionGrowth, Time, Output,bounds=([m1,n1],[m2,n2]))
-            s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
-            NewCorrelation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/\
-                             (np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
-            print('New Correlation is:',round(NewCorrelation,2))
-            print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
+if order == '1':
+    while order == '1':                                                                #if first order, allows the user to manually manipulate the variables to optimize the curve to their data
+        message = 'Does this curve fit the data? 1=yes 2=no: '
+        answer = s1.yesOrNo(message)
+        if answer == '1':
+            print('Great!')
+            order = 'end'
+        elif answer == '2':
+            print("Changing boundaries for the time constant and K_dc can often improve proformance.")
+            n1 = input('Time constant minimum? (Change based on previous results): ')
+            n2 = input('Time constant maximum?: ')
+            m1 = input('Steady State value minimum?: ')
+            m2 = input('Steady State value maximum?: ')
+            if order == '1':
+                popt, pcov = curve_fit(s1.functionGrowth, Time, Output,bounds=([m1,n1],[m2,n2]))
+                s1.graphDataTF(Time, Input, output_filt, Time_axis_name, Out_axis_name, popt)
+                NewCorrelation = np.sum((output_filt-np.mean(output_filt))*(resultArray-np.mean(resultArray)))/\
+                                 (np.sqrt(np.sum(((output_filt-np.mean(output_filt))**2))*np.sum((resultArray-np.mean(resultArray))**2)))
+                print('New Correlation is:',round(NewCorrelation,2))
+                print('The step response is:',round(popt[0],2),'(1-e^(-t/'+str(round(popt[1],2))+')')
+                order = '1'
+
+            
+if order == 'end':
+    print('Good bye.')
