@@ -27,9 +27,8 @@ Step responses can be found in many systems, including living biological systems
 - main.py is the driver of all aforementioned functions. The data included in this repository can be run through this driver.
 
 ## Features
-This project contains many key functions for analyzing the data.
 
-One design choice made was the ability to allow to user to manipulate the curve produced to better fit their data manually. This allows the user to manually change variables (for first order responses) such as the steady state value repeatedly until the user is satisfied with the results. For second order responses, the user has the option to allow the system to automatically optimize the curve to the data. In both cases, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
+The user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change variables (for first order responses) such as the steady state value repeatedly until the user is satisfied with the results. For second order responses, the user has the option to allow the system to automatically optimize the curve to the data. In both cases, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
 
 The user is also able to use data in either a .csv or .txt format!
 
