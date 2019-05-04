@@ -30,7 +30,7 @@ Step responses can be found in many systems, including living biological systems
 
 This project involved many key python tools including SciPy methods, NumPy, and matplotlib. It also used microprocessors (the Micro:bit and the Arduino) to collect data for use in this project. Some of the most notable methods applied in this project were singal processing (filtering of data), importation of data from files, the fitting of curves to data, and microcontroller-based data collection.
 
-The user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change bounds for variables (for first order responses), such as the Kdc value, repeatedly until the user is satisfied with the results. 
+In this program, the user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change bounds for variables (for first order responses), such as the Kdc value, repeatedly until the user is satisfied with the results. 
 
 One of the more interesting functions included in this code is the automatic optimization of the second order curves. For second order responses, the user has the option to allow the system to automatically better fit the curve to the data, as the system tries to find the best period from the data. In both the first and second order optimization functions, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
 
