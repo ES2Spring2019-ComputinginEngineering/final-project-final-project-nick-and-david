@@ -28,8 +28,12 @@ Step responses can be found in many systems, including living biological systems
 
 ## Features
 
-The user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change variables (for first order responses) such as the steady state value repeatedly until the user is satisfied with the results. For second order responses, the user has the option to allow the system to automatically optimize the curve to the data. In both cases, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
+This project involved many key python tools including SciPy methods, NumPy, and matplotlib. It also used microprocessors (the Micro:bit and the Arduino) to collect data for use in this project. Some of the most notable methods applied in this project were singal processing (filtering of data), importation of data from files, the fitting of curves to data, and microcontroller-based data collection.
 
-The user is also able to use data in either a .csv or .txt format!
+The user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change bounds for variables (for first order responses), such as the Kdc value, repeatedly until the user is satisfied with the results. 
 
-Crucial to this project was the SciPy.optimize library. This library contained the curvefit function that was used to take in an 'empty' function and return and curve that fit the data according to this function.
+One of the more interesting functions included in this code is the automatic optimization of the second order curves. For second order responses, the user has the option to allow the system to automatically better fit the curve to the data, as the system tries to find the best period from the data. In both the first and second order optimization functions, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
+
+The user is also able to use data in either a .csv or .txt format so long as it is formatted correctly (time, input, output for .csv files, and time, output for text files).
+
+Crucial to this project was the SciPy.optimize library. This library contained the curvefit function that was used to take in an 'empty' function and return a curve that fit the data according to this function.
