@@ -32,7 +32,7 @@ This project involved many key python tools including SciPy methods, NumPy, and 
 
 In this program, the user is allowed to manipulate the curve produced to better fit their data manually. This allows the user to manually change bounds for variables (for first order responses), such as the Kdc value, repeatedly until the user is satisfied with the results. 
 
-One of the more interesting functions included in this code is the automatic optimization of the second order curves. For second order responses, the user has the option to allow the system to automatically better fit the curve to the data, as the system tries to find the best period from the data. In both the first and second order optimization functions, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
+One of the more interesting functions included in this code is the automatic optimization of second order curves. For second order responses, the user has the option to allow the system to automatically better fit the curve to the data, as the system tries to find the best period from the data. In both the first and second order optimization functions, the user can view the correlation between the curve and the data at all steps of the process so as to find the curve that best fits their data.
 
 The user is also able to use data in either a .csv or .txt format so long as it is formatted correctly (time, input, output for .csv files, and time, output for text files).
 
